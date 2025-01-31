@@ -5,40 +5,47 @@ import java.util.*;
 import java.time.*;
 import java.time.format.*;
 
+// java.util.logging.Logger didn't seem to include date so I wanted to do it MY way
+/**
+ * Utility logging class, similar to that of java.util.logging
+ */
 public class Logger {
 
     public static enum Level {
         DBUG, VRBS, INFO, WARN, EROR, FATL;
+        // Debug, Verbose, Info, Warning, Error, Fatal
     }
 
     public static record Item(
-            Logger.Level lvl,
-            LocalDateTime time,
-            String id,
-            String state,
+            Logger.Level lvl, // e.g. Info
+            LocalDateTime time, // For formatting
+            String id, // For formatting
+            String state, // For formatting
             String msg) {
 
         public static DateTimeFormatter datefmt = DateTimeFormatter.ofPattern(
                 "yyMMMdd hhmmass.SS%"
-        );
+        ); // <year as 2 digits><3 letter month name><day as 2 digits> <hour>:<minute><am/pm><seconds>.<seconds>S
 
         @Override
         public String toString() {
             return "[date idst lv] msg"
+            // [25Jan30 12:00pm01.00s mod:asvl/init INFO] Initialization completed
                     .replace(
                             "date",
                             time.format(datefmt).replace('%', 's')
+                            // 25Jan30 12:00pm01.00s
                     )
-                    .replace("id", id())
-                    .replace("st", (state.equals("") ? "" : "/") + state)
-                    .replace("lv", lvl.toString())
-                    .replace("msg", msg());
+                    .replace("id", id()) // mod:asvl
+                    .replace("st", (state.equals("") ? "" : "/") + state) // /init
+                    .replace("lv", lvl.toString()) // INFO, DBUG, VRBS
+                    .replace("msg", msg()); // Initialization completed
         }
     }
 
     protected PrintStream output = System.err;
-    protected String id;
-    public List<Logger.Item> logs = new ArrayList<>();
+    protected String id; //group:name
+    public List<Logger.Item> logs = new ArrayList<>(); // Yes I know you can insert things here; please don't
     protected String state = "";
 
     public Logger(String group, String name) {

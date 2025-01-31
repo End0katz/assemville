@@ -7,6 +7,7 @@ public class Main {
 
     protected static JFrame win;
     protected static boolean active = true;
+    protected static final int EXITFROMWINCLOSE = 0x5765;
 
     public static void close() {
         System.out.println("close()");
@@ -23,11 +24,18 @@ public class Main {
         win.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //win.setUndecorated(true);
         win.setVisible(true);
+        win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         win.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 Main.close();
                 System.out.println("Blippity bloppity this window is now breathing manually");
+
+            
+
+    
+    
+        ////System.exit(EXITFROMWINCLOSE);
             }
         });
     }
@@ -42,11 +50,11 @@ public class Main {
         loadmods();
         startrender();
         System.out.println("appENTER");
-        while (Main.active) {
+        while (win.isDisplayable()) {
             update();
             render();
         }
-        win.dispose();
+        close();
         System.out.println("appExit");
     }
 }
