@@ -1,23 +1,13 @@
 package com.end0katz.assemville;
 
 /**
- * Base class for all blocks. To create a block, subclass this and define (at
+ * Base class for all items. To create a item, subclass this and define (at
  * minimum):
  * <ul>
  * <li>public static NamespacedID getid()</li>
  * </ul>
  */
-public abstract class BlockType {
-
-    /**
-     * Returns the size of the block, as a Coord3D containing the width, height
-     * and length.
-     *
-     * @return new Coord3D(width, height, length)
-     */
-    public Coord3D getsize() {
-        return new Coord3D(1, 1, 1);
-    }
+public class ItemType {
 
     /**
      * Returns the id of this block.
@@ -40,8 +30,9 @@ public abstract class BlockType {
         return new NamespacedID();
     }
 
-    public BlockType register() {
-        Registers.blocks(this, id());
+    public ItemType register() {
+        Registers.items(this, id());
         return this;
     }
+
 }

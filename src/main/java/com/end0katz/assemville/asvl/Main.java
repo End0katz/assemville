@@ -19,4 +19,8 @@ public class Main extends Mod {
     public static void blockinit() {
         Blocks.register();
     }
+
+    public static void iteminit() {
+        Items.register();
+    }
 }
