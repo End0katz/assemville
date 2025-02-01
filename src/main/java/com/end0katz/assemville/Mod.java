@@ -66,26 +66,23 @@ public abstract class Mod {
         String result = "";
 
         state = LoadingState.ITEM;
-        result += iteminit();
+        iteminit();
         state = LoadingState.BLOCK;
-        result += blockinit();
+        blockinit();
         state = LoadingState.ENTITY;
-        result += entityinit();
+        entityinit();
         logger.info("----- %s Initialized -----", name());
         state = LoadingState.DONE;
         //// logger.exiting("Mod %s".formatted(MODID), "Initialization");
         return result.equals("") ? null : result;
     }
 
-    public static String iteminit() {
-        return "";
+    public static void iteminit() {
     }
 
-    public static String blockinit() {
-        return "";
+    public static void blockinit() {
     }
 
-    public static String entityinit() {
-        return "";
+    public static void entityinit() {
     }
 }

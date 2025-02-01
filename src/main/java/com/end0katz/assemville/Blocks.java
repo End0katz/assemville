@@ -7,14 +7,16 @@ import java.util.*;
  */
 public class Blocks {
 
-    public static HashMap<NamespacedID, Class<? extends Block>> blocks = new HashMap<>();
+    public static HashMap<NamespacedID, BlockType> blocks = new HashMap<>();
 
     /**
      * Registers a block to the list
      *
-     * @return the input class
+     * @param block the BlockType to register
+     * @param id the NamespacedID to register it as
+     * @return the input BlockType
      */
-    public static <T extends Block> Class<T> register(Class<T> block, NamespacedID id) {
+    public static BlockType register(BlockType block, NamespacedID id) {
         if (blocks.containsKey(id)) { // Already registered
           //// throw null;
             // What exception do I put here?
@@ -26,7 +28,7 @@ public class Blocks {
         return block;
     }
 
-    public static Class<? extends Block> get(NamespacedID id) {
+    public static BlockType get(NamespacedID id) {
         return blocks.get(id);
     }
 }

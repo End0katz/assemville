@@ -1,19 +1,20 @@
 package com.end0katz.assemville;
 
 import javax.swing.*;
-import java.awt.event.*;
 
 public class Main {
 
     protected static JFrame win;
     protected static boolean active = true;
-    protected static final int EXITFROMWINCLOSE = 0x5765;
+    public static String state = "init";
+
+    public static String file(String path) {
+        return "src/main/" + path;
+    }
 
     public static void close() {
-        System.out.println("close()");
-        System.out.println(Main.active);
+        win.dispose();
         Main.active = false;
-        System.out.println(Main.active);
     }
 
     public static void loadmods() {
@@ -21,23 +22,11 @@ public class Main {
 
     public static void startrender() {
         Main.win = new JFrame("Assemville");
+        win.add(new JLabel(new ImageIcon(file("assets/grass.png"))));
+        win.setLayout(null);
         win.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //win.setUndecorated(true);
-        win.setVisible(true);
         win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        win.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                Main.close();
-                System.out.println("Blippity bloppity this window is now breathing manually");
-
-            
-
-    
-    
-        ////System.exit(EXITFROMWINCLOSE);
-            }
-        });
+        win.setVisible(true);
     }
 
     public static void update() {
@@ -49,12 +38,10 @@ public class Main {
     public static void main(String[] args) {
         loadmods();
         startrender();
-        System.out.println("appENTER");
         while (win.isDisplayable()) {
             update();
             render();
         }
         close();
-        System.out.println("appExit");
     }
 }
